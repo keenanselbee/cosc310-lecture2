@@ -20,3 +20,5 @@ data/*.tmp.json
 .idea/
 .DS_Store
 Thumbs.db
+
+Lecture2_EXERCISES.md
