@@ -56,4 +56,30 @@ def test_removing_an_absent_item_raises():
         cart.remove_item(999)
 
 
-# TODO: add one test of your own. What behaviour is not covered above?
+def test_multiple_items():
+    cart = Cart()
+    cart.add_item(GYOZA, 2)
+    cart.add_item(RAMEN, 1)
+    assert cart.total() == 32.50
+
+
+def test_same_item_increases():
+    cart = Cart()
+    cart.add_item(GYOZA, 2)
+    cart.add_item(GYOZA, 1)
+    assert len(cart.lines) == 1
+    assert cart.lines[0]["qty"] == 3
+
+
+def test_zero_quantity():
+    cart = Cart()
+    with pytest.raises(ValueError):
+        cart.add_item(GYOZA, 0)
+
+
+def test_unavailable_item_out_of_stock():
+    cart = Cart()
+    unavailable_item = GYOZA.copy()
+    unavailable_item["available"] = False
+    with pytest.raises(OutOfStockError):
+        cart.add_item(unavailable_item, 1)
